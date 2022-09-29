@@ -31,7 +31,32 @@ struct fi
 	int xx;
 	int yy; //адресса для вывода спрайтов
 };
-
+int cut(board(&cell)[8][8], char adr0, char adr1, char adr2, char adr3, int cntc, fi(&fig)[32])
+{
+	int fl_cut = 0;
+	if (cell[adr2][adr3].presence == 1)
+	{
+		int color = cell[adr0][adr1].colrFigure;
+		if (color != cell[adr2][adr3].colrFigure)
+		{
+			fl_cut = 1;
+			if (color == 0)
+			{
+				int num = cell[adr2][adr3].fn;
+				fig[num].xx = 1000 - (920 * (cntc / 8)) + 115 * cntc;
+				fig[num].yy = cntc / 8 * 120 + 150;
+			}
+			else
+			{
+				int num = cell[adr2][adr3].fn;
+				fig[num].xx = 1000 - (920 * (cntc / 8)) + 115 * cntc;
+				fig[num].yy = cntc / 8 * 120 + 750;
+			}
+		}
+		else { fl_cut = 2; }
+	}
+	return  fl_cut;
+}
 int ruls(board(&cell)[8][8], char adr0, char adr1, char adr2, char adr3)
 {
 	if (static_cast <int> (cell[adr0][adr1].figure) == 2)
@@ -699,7 +724,9 @@ int main()
 	{
 		cell[count][6].presence = 1;
 		cell[count][6].colrFigure = 1;
-		//создание белых пешек
+		cell[count][6].figure = PAWN;
+	}
+	//создание белых пешек
 	for (int count = 0; count < 8; count++)
 	{
 		for (int cnt = 0; cnt < 8; cnt++)
