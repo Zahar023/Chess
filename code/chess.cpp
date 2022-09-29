@@ -31,6 +31,595 @@ struct fi
 	int xx;
 	int yy; //адресса для вывода спрайтов
 };
+
+int ruls(board(&cell)[8][8], char adr0, char adr1, char adr2, char adr3)
+{
+	if (static_cast <int> (cell[adr0][adr1].figure) == 2)
+	{
+		int cnt = 0;
+		int ruls[25][2];
+		int pr1 = 1;
+		int pr2 = 1;
+		int pr3 = 1;
+		int pr4 = 1;
+		if (1 <= adr0 - 1) {
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1;
+			cnt++;
+		}
+		if (7 >= adr0 + 1) {
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1;
+			cnt++;
+		}
+		if (1 <= adr1 - 1) {
+			ruls[cnt][0] = adr0;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if (7 >= adr1 + 1) {
+			ruls[cnt][0] = adr0;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+		for (int count = 1; count < 8; count++)
+		{
+			if (0 <= adr0 - count)
+			{
+				if (cell[adr0 - count][adr1].presence == 0 && pr1 == 1)
+				{
+					ruls[cnt][0] = adr0 - count;
+					ruls[cnt][1] = adr1;
+					cnt++;
+				}
+				else { pr1 = 0; }
+				if (cell[adr0 - 1 - count][adr1].presence == 1 && pr1 == 1)
+				{
+					ruls[cnt][0] = adr0 - 1 - count;
+					ruls[cnt][1] = adr1;
+					cnt++;
+					pr1 = 0;
+				}
+
+
+			}
+			if (adr0 + count <= 7)
+			{
+				if (cell[adr0 + count][adr1].presence == 0 && pr2 == 1)
+				{
+					ruls[cnt][0] = adr0 + count;
+					ruls[cnt][1] = adr1;
+					cnt++;
+				}
+				else { pr2 = 0; }
+				if (cell[adr0 + 1 + count][adr1].presence == 1 && pr2 == 1)
+				{
+					ruls[cnt][0] = adr0 + 1 + count;
+					ruls[cnt][1] = adr1;
+					cnt++;
+					pr2 = 0;
+				}
+
+
+			}
+			if (0 <= adr1 - count)
+			{
+				if (cell[adr0][adr1 - count].presence == 0 && pr3 == 1)
+				{
+					ruls[cnt][0] = adr0;
+					ruls[cnt][1] = adr1 - count;
+					cnt++;
+				}
+				else { pr3 = 0; }
+				if (cell[adr0][adr1 - 1 - count].presence == 1 && pr3 == 1)
+				{
+					ruls[cnt][0] = adr0;
+					ruls[cnt][1] = adr1 - 1 - count;
+					cnt++;
+					pr3 = 0;
+				}
+
+
+			}
+			if (adr1 + count <= 7)
+			{
+				if (cell[adr0][adr1 + count].presence == 0 && pr4 == 1)
+				{
+					ruls[cnt][0] = adr0;
+					ruls[cnt][1] = adr1 + count;
+					cnt++;
+				}
+				else { pr4 = 0; }
+				if (cell[adr0][adr1 + 1 + count].presence == 1 && pr4 == 1)
+				{
+					ruls[cnt][0] = adr0;
+					ruls[cnt][1] = adr1 + 1 + count;
+					cnt++;
+					pr4 = 0;
+				}
+			}
+		}
+		for (int count = 0; count < cnt; count++)
+		{
+			if (static_cast <int> (adr2) == ruls[count][0] && static_cast <int> (adr3) == ruls[count][1])
+			{
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+	if (cell[adr0][adr1].figure == 3)
+	{
+		int cnt = 0;
+		int ruls[25][2];
+
+		if ((adr0 - 1 >= 0) && (adr1 - 2 >= 0))
+		{
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1 - 2;
+			cnt++;
+		}
+		if ((adr0 - 1 >= 0) && (adr1 + 2 <= 7))
+		{
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1 + 2;
+			cnt++;
+		}
+
+		if ((adr0 + 1 <= 7) && (adr1 - 2 >= 0))
+		{
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1 - 2;
+			cnt++;
+		}
+		if ((adr0 + 1 <= 7) && (adr1 + 2 <= 7))
+		{
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1 + 2;
+			cnt++;
+		}
+		if ((adr0 - 2 >= 0) && (adr1 - 1 >= 0))
+		{
+			ruls[cnt][0] = adr0 - 2;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if ((adr0 - 2 >= 0) && (adr1 + 1 <= 7))
+		{
+			ruls[cnt][0] = adr0 - 2;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+
+		if ((adr0 + 2 <= 7) && (adr1 - 1 >= 0))
+		{
+			ruls[cnt][0] = adr0 + 2;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if ((adr0 + 2 <= 7) && (adr1 + 1 <= 7))
+		{
+			ruls[cnt][0] = adr0 + 2;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+		cout << adr0 << '\t' << adr1 << endl;
+		for (int ct = 0; ct < cnt; ct++) {
+			cout << ruls[ct][0] << '\t' << ruls[ct][1] << endl << endl;
+		}
+		for (int count = 0; count < cnt; count++)
+		{
+			if (static_cast <int> (adr2) == ruls[count][0] && static_cast <int> (adr3) == ruls[count][1])
+			{
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+	if (cell[adr0][adr1].figure == 4)
+	{
+		int cnt = 0;
+		int ruls[25][2];
+		int pr1 = 1;
+		int pr2 = 1;
+		int pr3 = 1;
+		int pr4 = 1;
+
+		if (adr0 - 1 >= 1 && adr1 - 1 >= 1)
+		{
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if (adr0 + 1 <= 7 && adr1 + 1 <= 7)
+		{
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+		if (adr0 + 1 <= 7 && adr1 - 1 >= 1)
+		{
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if (adr0 - 1 >= 1 && adr1 + 1 <= 7)
+		{
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+		for (int count = 1; count < 8; count++)
+		{
+			if (adr0 + count <= 7 && adr1 + count <= 8)
+			{
+
+				if (cell[adr0 + count][adr1 + count].presence == 0 && pr1 == 1)
+				{
+					ruls[cnt][0] = adr0 + count;
+					ruls[cnt][1] = adr1 + count;
+					cnt++;
+				}
+				else { pr1 = 0; }
+				if (cell[adr0 + count + 1][adr1 + count + 1].presence == 1 && pr1 == 1)
+				{
+					ruls[cnt][0] = adr0 + count + 1;
+					ruls[cnt][1] = adr1 + count + 1;
+					cnt++;
+					pr1 = 0;
+				}
+			}
+			if (adr0 - count >= 0 && adr1 + count <= 7)
+			{
+				if (cell[adr0 - count][adr1 + count].presence == 0 && pr2 == 1)
+				{
+					ruls[cnt][0] = adr0 - count;
+					ruls[cnt][1] = adr1 + count;
+					cnt++;
+				}
+				else { pr2 = 0; }
+				if (cell[adr0 - count - 1][adr1 + count + 1].presence == 1 && pr2 == 1)
+				{
+					ruls[cnt][0] = adr0 - count - 1;
+					ruls[cnt][1] = adr1 + count + 1;
+					cnt++;
+					pr2 = 0;
+				}
+			}
+			if (adr0 - count >= 0 && adr1 - count >= 0)
+			{
+				if (cell[adr0 - count][adr1 - count].presence == 0 && pr3 == 1)
+				{
+					ruls[cnt][0] = adr0 - count;
+					ruls[cnt][1] = adr1 - count;
+					cnt++;
+				}
+				else { pr3 = 0; }
+				if (cell[adr0 - count - 1][adr1 - count - 1].presence == 1 && pr3 == 1)
+				{
+					ruls[cnt][0] = adr0 - count - 1;
+					ruls[cnt][1] = adr1 - count - 1;
+					cnt++;
+					pr3 = 0;
+				}
+			}
+
+			if (adr0 + count <= 7 && adr1 - count >= 0)
+			{
+				if (cell[adr0 + count][adr1 - count].presence == 0 && pr4 == 1)
+				{
+					ruls[cnt][0] = adr0 + count;
+					ruls[cnt][1] = adr1 - count;
+					cnt++;
+				}
+				else { pr4 = 0; }
+				if (cell[adr0 + count + 1][adr1 - count - 1].presence == 1 && pr4 == 1)
+				{
+					ruls[cnt][0] = adr0 + count + 1;
+					ruls[cnt][1] = adr1 - count - 1;
+					cnt++;
+					pr4 = 0;
+				}
+			}
+		}
+		for (int count = 0; count < cnt; count++)
+		{
+			cout << ruls[count][0] << '\t' << ruls[count][1] << endl;
+			if (static_cast <int> (adr2) == ruls[count][0] && static_cast <int> (adr3) == ruls[count][1])
+			{
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+	if (cell[adr0][adr1].figure == 5)
+	{
+		int cnt = 0;
+		int ruls[40][2];
+		int pr1 = 1;
+		int pr2 = 1;
+		int pr3 = 1;
+		int pr4 = 1;
+
+		if (adr0 - 1 >= 1 && adr1 - 1 >= 1)
+		{
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if (adr0 + 1 <= 7 && adr1 + 1 <= 7)
+		{
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+		if (adr0 + 1 <= 7 && adr1 - 1 >= 1)
+		{
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if (adr0 - 1 >= 1 && adr1 + 1 <= 7)
+		{
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+
+		if (1 <= adr0 - 1) {
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1;
+			cnt++;
+		}
+		if (7 >= adr0 + 1) {
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1;
+			cnt++;
+		}
+		if (1 <= adr1 - 1) {
+			ruls[cnt][0] = adr0;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if (7 >= adr1 + 1) {
+			ruls[cnt][0] = adr0;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+		for (int count = 1; count < 8; count++)
+		{
+			if (adr0 + count <= 7 && adr1 + count <= 8)
+			{
+
+				if (cell[adr0 + count][adr1 + count].presence == 0 && pr1 == 1)
+				{
+					ruls[cnt][0] = adr0 + count;
+					ruls[cnt][1] = adr1 + count;
+					cnt++;
+				}
+				else { pr1 = 0; }
+				if (cell[adr0 + count + 1][adr1 + count + 1].presence == 1 && pr1 == 1)
+				{
+					ruls[cnt][0] = adr0 + count + 1;
+					ruls[cnt][1] = adr1 + count + 1;
+					cnt++;
+					pr1 = 0;
+				}
+			}
+			if (adr0 - count >= 0 && adr1 + count <= 7)
+			{
+				if (cell[adr0 - count][adr1 + count].presence == 0 && pr2 == 1)
+				{
+					ruls[cnt][0] = adr0 - count;
+					ruls[cnt][1] = adr1 + count;
+					cnt++;
+				}
+				else { pr2 = 0; }
+				if (cell[adr0 - count - 1][adr1 + count + 1].presence == 1 && pr2 == 1)
+				{
+					ruls[cnt][0] = adr0 - count - 1;
+					ruls[cnt][1] = adr1 + count + 1;
+					cnt++;
+					pr2 = 0;
+				}
+			}
+			if (adr0 - count >= 0 && adr1 - count >= 0)
+			{
+				if (cell[adr0 - count][adr1 - count].presence == 0 && pr3 == 1)
+				{
+					ruls[cnt][0] = adr0 - count;
+					ruls[cnt][1] = adr1 - count;
+					cnt++;
+				}
+				else { pr3 = 0; }
+				if (cell[adr0 - count - 1][adr1 - count - 1].presence == 1 && pr3 == 1)
+				{
+					ruls[cnt][0] = adr0 - count - 1;
+					ruls[cnt][1] = adr1 - count - 1;
+					cnt++;
+					pr3 = 0;
+				}
+			}
+
+			if (adr0 + count <= 7 && adr1 - count >= 0)
+			{
+				if (cell[adr0 + count][adr1 - count].presence == 0 && pr4 == 1)
+				{
+					ruls[cnt][0] = adr0 + count;
+					ruls[cnt][1] = adr1 - count;
+					cnt++;
+				}
+				else { pr4 = 0; }
+				if (cell[adr0 + count + 1][adr1 - count - 1].presence == 1 && pr4 == 1)
+				{
+					ruls[cnt][0] = adr0 + count + 1;
+					ruls[cnt][1] = adr1 - count - 1;
+					cnt++;
+					pr4 = 0;
+				}
+			}
+		}
+		pr1 = 1;
+		pr2 = 1;
+		pr3 = 1;
+		pr4 = 1;
+		for (int count = 1; count < 8; count++)
+		{
+			if (0 <= adr0 - count)
+			{
+				if (cell[adr0 - count][adr1].presence == 0 && pr1 == 1)
+				{
+					ruls[cnt][0] = adr0 - count;
+					ruls[cnt][1] = adr1;
+					cnt++;
+				}
+				else { pr1 = 0; }
+				if (cell[adr0 - 1 - count][adr1].presence == 1 && pr1 == 1)
+				{
+					ruls[cnt][0] = adr0 - 1 - count;
+					ruls[cnt][1] = adr1;
+					cnt++;
+					pr1 = 0;
+				}
+
+
+			}
+			if (adr0 + count <= 7)
+			{
+				if (cell[adr0 + count][adr1].presence == 0 && pr2 == 1)
+				{
+					ruls[cnt][0] = adr0 + count;
+					ruls[cnt][1] = adr1;
+					cnt++;
+				}
+				else { pr2 = 0; }
+				if (cell[adr0 + 1 + count][adr1].presence == 1 && pr2 == 1)
+				{
+					ruls[cnt][0] = adr0 + 1 + count;
+					ruls[cnt][1] = adr1;
+					cnt++;
+					pr2 = 0;
+				}
+
+
+			}
+			if (0 <= adr1 - count)
+			{
+				if (cell[adr0][adr1 - count].presence == 0 && pr3 == 1)
+				{
+					ruls[cnt][0] = adr0;
+					ruls[cnt][1] = adr1 - count;
+					cnt++;
+				}
+				else { pr3 = 0; }
+				if (cell[adr0][adr1 - 1 - count].presence == 1 && pr3 == 1)
+				{
+					ruls[cnt][0] = adr0;
+					ruls[cnt][1] = adr1 - 1 - count;
+					cnt++;
+					pr3 = 0;
+				}
+
+
+			}
+			if (adr1 + count <= 7)
+			{
+				if (cell[adr0][adr1 + count].presence == 0 && pr4 == 1)
+				{
+					ruls[cnt][0] = adr0;
+					ruls[cnt][1] = adr1 + count;
+					cnt++;
+				}
+				else { pr4 = 0; }
+				if (cell[adr0][adr1 + 1 + count].presence == 1 && pr4 == 1)
+				{
+					ruls[cnt][0] = adr0;
+					ruls[cnt][1] = adr1 + 1 + count;
+					cnt++;
+					pr4 = 0;
+				}
+			}
+		}
+		for (int count = 0; count < cnt; count++)
+		{
+			cout << ruls[count][0] << '\t' << ruls[count][1] << endl;
+			if (static_cast <int> (adr2) == ruls[count][0] && static_cast <int> (adr3) == ruls[count][1])
+			{
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+	if (cell[adr0][adr1].figure == 6)
+	{
+		int cnt = 0;
+		int ruls[10][2];
+		int pr1 = 1;
+		int pr2 = 1;
+		int pr3 = 1;
+		int pr4 = 1;
+
+		if (adr0 - 1 >= 0 && adr1 - 1 >= 0)
+		{
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if (adr0 + 1 <= 7 && adr1 + 1 <= 7)
+		{
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+		if (adr0 + 1 <= 7 && adr1 - 1 >= 0)
+		{
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if (adr0 - 1 >= 0 && adr1 + 1 <= 7)
+		{
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+
+		if (0 <= adr0 - 1) {
+			ruls[cnt][0] = adr0 - 1;
+			ruls[cnt][1] = adr1;
+			cnt++;
+		}
+		if (7 >= adr0 + 1) {
+			ruls[cnt][0] = adr0 + 1;
+			ruls[cnt][1] = adr1;
+			cnt++;
+		}
+		if (0 <= adr1 - 1) {
+			ruls[cnt][0] = adr0;
+			ruls[cnt][1] = adr1 - 1;
+			cnt++;
+		}
+		if (7 >= adr1 + 1) {
+			ruls[cnt][0] = adr0;
+			ruls[cnt][1] = adr1 + 1;
+			cnt++;
+		}
+		for (int count = 0; count < cnt; count++)
+		{
+			cout << ruls[count][0] << '\t' << ruls[count][1] << endl;
+			if (static_cast <int> (adr2) == ruls[count][0] && static_cast <int> (adr3) == ruls[count][1])
+			{
+				return 1;
+			}
+		}
+		return 0;
+	}
+	return 1;
+}
 int main()
 {
 	int fl_cut = 0; //флаг на сруб
